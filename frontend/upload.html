@@ -1,0 +1,263 @@
+
+ 
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Upload Material - StudyShare</title>
+ 
+    <link rel="stylesheet" href="style.css">
+ 
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+ 
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+</head>
+ 
+<body>
+ 
+<!-- ================= NAVBAR ================= -->
+ 
+<header class="header">
+    <nav class="navbar container">
+ 
+        <a href="index.html" class="logo">
+            <i class="fa-solid fa-graduation-cap"></i>
+            <span>Study<span class="logo-highlight">Share</span></span>
+        </a>
+ 
+        <ul class="nav-links" id="navLinks">
+            <li><a href="index.html">Home</a></li>
+            <li><a href="index.html#materials">Materials</a></li>
+            <li><a href="dashboard.html">Dashboard</a></li>
+            <li id="adminNavLink" style="display:none;"><a href="admin.html">Admin Panel</a></li>
+        </ul>
+ 
+        <div class="nav-actions">
+            <button class="theme-btn" id="themeBtn">
+                <i class="fa-solid fa-moon"></i>
+            </button>
+ 
+            <a href="login.html" class="login-btn" data-logout>
+                Logout
+            </a>
+ 
+            <button class="menu-btn" id="menuBtn">
+                <i class="fa-solid fa-bars"></i>
+            </button>
+        </div>
+ 
+    </nav>
+</header>
+ 
+ 
+<!-- ================= PAGE HERO ================= -->
+ 
+<section class="page-hero">
+    <div class="container">
+        <span class="crumb">
+            <i class="fa-solid fa-cloud-arrow-up"></i>
+            Share Material
+        </span>
+        <h1>Upload Study Material</h1>
+        <p style="color:var(--muted);max-width:520px;margin:10px auto 0;">
+            Share your notes, question papers or guides and help
+            thousands of students learn better.
+        </p>
+    </div>
+</section>
+ 
+ 
+<!-- ================= UPLOAD CONTENT ================= -->
+ 
+<section class="section" style="padding-top:50px;">
+ 
+    <div class="container upload-layout">
+ 
+        <!-- LEFT: FORM -->
+        <div class="panel">
+ 
+            <div class="panel-title">
+                <h2>Material Details</h2>
+            </div>
+ 
+            <form id="pageUploadForm" novalidate>
+ 
+                <div class="dropzone" id="dropzone">
+                    <i class="fa-solid fa-cloud-arrow-up"></i>
+                    <h3>Drag & drop your file here</h3>
+                    <p>or click to browse — PDF, DOC, DOCX up to 20MB</p>
+                    <input type="file" id="dropzoneInput" accept=".pdf,.doc,.docx">
+                </div>
+ 
+                <div class="file-preview-list" id="filePreviewList"></div>
+ 
+                <div class="upload-form-fields">
+ 
+                    <div class="form-field">
+                        <label for="materialTitle">Material Title</label>
+                        <div class="input-wrap">
+                            <i class="fa-solid fa-heading field-icon"></i>
+                            <input type="text"
+                                   id="materialTitle"
+                                   placeholder="e.g. Operating Systems - Unit 3 Notes"
+                                   required>
+                        </div>
+                    </div>
+ 
+                    <div class="form-field">
+                        <label for="materialSubject">Subject Category</label>
+                        <div class="input-wrap">
+                            <i class="fa-solid fa-shapes field-icon"></i>
+                            <select id="materialSubject" required>
+                                <option value="">Select Subject</option>
+                                <option>Programming</option>
+                                <option>Database</option>
+                                <option>Networking</option>
+                                <option>Web Development</option>
+                                <option>Operating Systems</option>
+                                <option>Management</option>
+                            </select>
+                        </div>
+                    </div>
+ 
+                    <div class="form-field">
+                        <label for="materialType">Material Type</label>
+                        <div class="input-wrap">
+                            <i class="fa-solid fa-layer-group field-icon"></i>
+                            <select id="materialType" required>
+                                <option value="">Select Type</option>
+                                <option>Lecture Notes</option>
+                                <option>Question Paper</option>
+                                <option>Assignment</option>
+                                <option>Lab Manual</option>
+                                <option>Project Report</option>
+                            </select>
+                        </div>
+                    </div>
+ 
+                    <div class="form-field">
+                        <label for="materialDescription">Description</label>
+                        <textarea
+                            id="materialDescription"
+                            rows="5"
+                            placeholder="Briefly describe what this material covers..."
+                            required
+                            style="width:100%;border:1px solid var(--border);border-radius:8px;padding:13px;outline:none;resize:vertical;font-family:inherit;font-size:14px;"></textarea>
+                    </div>
+ 
+                    <div class="form-field">
+                        <label for="tagInputField">Tags</label>
+                        <div class="tag-input-box" id="tagInputBox">
+                            <span class="tag-pill">exams<button type="button"><i class="fa-solid fa-xmark"></i></button></span>
+                            <span class="tag-pill">notes<button type="button"><i class="fa-solid fa-xmark"></i></button></span>
+                            <input type="text" id="tagInputField" placeholder="Add a tag and press Enter">
+                        </div>
+                        <span class="field-hint">Tags help other students find your material faster.</span>
+                    </div>
+ 
+                    <label class="checkbox-row">
+                        <input type="checkbox" required>
+                        This material is my own work or I have permission to share it.
+                    </label>
+ 
+                    <button class="primary-btn" type="submit" style="justify-content:center;">
+                        <i class="fa-solid fa-cloud-arrow-up"></i>
+                        Submit Material
+                    </button>
+ 
+                </div>
+ 
+            </form>
+ 
+        </div>
+ 
+        <!-- RIGHT: GUIDELINES -->
+        <div>
+ 
+            <div class="panel" style="margin-bottom:22px;">
+ 
+                <div class="panel-title">
+                    <h2>Upload Guidelines</h2>
+                </div>
+ 
+                <ul class="guideline-list">
+                    <li>
+                        <i class="fa-solid fa-circle-check"></i>
+                        Only upload original or properly credited material.
+                    </li>
+                    <li>
+                        <i class="fa-solid fa-circle-check"></i>
+                        Use a clear, descriptive title so students can find it easily.
+                    </li>
+                    <li>
+                        <i class="fa-solid fa-circle-check"></i>
+                        Accepted formats: PDF, DOC, DOCX — up to 20MB per file.
+                    </li>
+                    <li>
+                        <i class="fa-solid fa-circle-check"></i>
+                        Submissions are reviewed before they go live on StudyShare.
+                    </li>
+                    <li>
+                        <i class="fa-solid fa-circle-check"></i>
+                        Avoid uploading copyrighted textbooks or paid content.
+                    </li>
+                </ul>
+ 
+            </div>
+ 
+            <div class="panel">
+ 
+                <div class="panel-title">
+                    <h2>Why Share?</h2>
+                </div>
+ 
+                <div class="activity-list">
+ 
+                    <div class="activity-item">
+                        <div class="activity-dot"><i class="fa-solid fa-users"></i></div>
+                        <div>
+                            <p>Help thousands of students prep smarter</p>
+                        </div>
+                    </div>
+ 
+                    <div class="activity-item">
+                        <div class="activity-dot"><i class="fa-solid fa-star"></i></div>
+                        <div>
+                            <p>Build your reputation as a top contributor</p>
+                        </div>
+                    </div>
+ 
+                    <div class="activity-item">
+                        <div class="activity-dot"><i class="fa-solid fa-chart-line"></i></div>
+                        <div>
+                            <p>Track downloads and ratings on your dashboard</p>
+                        </div>
+                    </div>
+ 
+                </div>
+ 
+            </div>
+ 
+        </div>
+ 
+    </div>
+ 
+</section>
+ 
+ 
+<!-- ================= TOAST ================= -->
+ 
+<div class="toast" id="toast">
+    <i class="fa-solid fa-circle-check"></i>
+    <span id="toastMessage">Success!</span>
+</div>
+ 
+<script src="script.js"></script>
+ 
+</body>
+</html>
+ 

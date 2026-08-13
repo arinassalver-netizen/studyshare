@@ -1,0 +1,293 @@
+
+ 
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - StudyShare</title>
+ 
+    <link rel="stylesheet" href="style.css">
+ 
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+ 
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+</head>
+ 
+<body>
+ 
+<!-- ================= NAVBAR ================= -->
+ 
+<header class="header">
+    <nav class="navbar container">
+ 
+        <a href="index.html" class="logo">
+            <i class="fa-solid fa-graduation-cap"></i>
+            <span>Study<span class="logo-highlight">Share</span></span>
+        </a>
+ 
+        <ul class="nav-links" id="navLinks">
+            <li><a href="index.html">Home</a></li>
+            <li><a href="index.html#materials">Materials</a></li>
+            <li><a href="dashboard.html" class="active">Dashboard</a></li>
+            <li id="adminNavLink" style="display:none;"><a href="admin.html">Admin Panel</a></li>
+        </ul>
+ 
+        <div class="nav-actions">
+            <button class="theme-btn" id="themeBtn">
+                <i class="fa-solid fa-moon"></i>
+            </button>
+ 
+           <a href="#" class="login-btn" data-logout>
+            Logout
+            </a>
+ 
+            <button class="menu-btn" id="menuBtn">
+                <i class="fa-solid fa-bars"></i>
+            </button>
+        </div>
+ 
+    </nav>
+</header>
+ 
+ 
+<!-- ================= APP SHELL ================= -->
+ 
+<div class="app-shell">
+ 
+    <div class="sidebar-overlay" id="sidebarOverlay" style="display:none;"></div>
+ 
+    <!-- SIDEBAR -->
+    <aside class="app-sidebar" id="appSidebar">
+ 
+        <div class="sidebar-profile">
+            <div class="sidebar-avatar" data-session-initials>GU</div>
+            <div>
+                <strong data-session-name>Guest User</strong>
+                <span data-session-email>guest@studyshare.com</span>
+            </div>
+        </div>
+ 
+        <ul class="sidebar-nav">
+            <li><a href="#" class="active"><i class="fa-solid fa-gauge"></i> Overview</a></li>
+            <li><a href="#my-materials"><i class="fa-solid fa-folder-open"></i> My Materials</a></li>
+            <li><a href="#saved"><i class="fa-solid fa-bookmark"></i> Saved</a></li>
+            <li><a href="upload.html"><i class="fa-solid fa-cloud-arrow-up"></i> Upload Material</a></li>
+            <li><a href="#profile"><i class="fa-solid fa-user"></i> Profile Settings</a></li>
+        </ul>
+ 
+        <div class="sidebar-nav-group-label">More</div>
+        <ul class="sidebar-nav">
+            <li><a href="index.html"><i class="fa-solid fa-house"></i> Back to Site</a></li>
+            <li><a href="#" class="sidebar-footer-link" data-logout><i class="fa-solid fa-right-from-bracket"></i> Logout</a></li>
+        </ul>
+ 
+    </aside>
+ 
+    <!-- MAIN -->
+    <main class="app-main">
+ 
+        <div class="app-topbar">
+ 
+            <button class="sidebar-toggle-btn" id="sidebarToggleBtn">
+                <i class="fa-solid fa-bars"></i>
+            </button>
+ 
+            <div class="topbar-search">
+                <i class="fa-solid fa-magnifying-glass"></i>
+                <input type="text" placeholder="Search your materials...">
+            </div>
+ 
+            <div class="topbar-actions">
+                <button class="topbar-icon-btn">
+                    <i class="fa-solid fa-bell"></i>
+                    <span class="dot"></span>
+                </button>
+                <a href="upload.html" class="primary-btn" style="padding:10px 16px;font-size:13px;">
+                    <i class="fa-solid fa-cloud-arrow-up"></i>
+                    Upload
+                </a>
+                <div class="sidebar-avatar" data-session-initials>GU</div>
+            </div>
+ 
+        </div>
+ 
+        <div class="app-content">
+ 
+            <div class="content-header">
+                <div>
+                    <h1>Welcome back, <span data-session-name>Guest User</span> 👋</h1>
+                    <p>Here's what's happening with your study materials today.</p>
+                </div>
+            </div>
+ 
+            <!-- STATS -->
+            <div class="stat-grid">
+ 
+                <div class="stat-card">
+                    <div>
+                        <p>Materials Uploaded</p>
+                        <h3 id="statUploaded">—</h3>
+                        <span class="stat-trend up"><i class="fa-solid fa-file-lines"></i> Your total uploads</span>
+                    </div>
+                    <div class="stat-icon pdf">
+                        <i class="fa-solid fa-file-lines"></i>
+                    </div>
+                </div>
+ 
+                <div class="stat-card">
+                    <div>
+                        <p>Total Downloads</p>
+                        <h3 id="statDownloads">—</h3>
+                        <span class="stat-trend up"><i class="fa-solid fa-download"></i> Across all your materials</span>
+                    </div>
+                    <div class="stat-icon database">
+                        <i class="fa-solid fa-download"></i>
+                    </div>
+                </div>
+ 
+                <div class="stat-card">
+                    <div>
+                        <p>Saved Materials</p>
+                        <h3>42</h3>
+                        <span class="stat-trend up"><i class="fa-solid fa-arrow-up"></i> 5 new</span>
+                    </div>
+                    <div class="stat-icon network">
+                        <i class="fa-solid fa-bookmark"></i>
+                    </div>
+                </div>
+ 
+                <div class="stat-card">
+                    <div>
+                        <p>Average Rating</p>
+                        <h3 id="statSaved">—</h3>
+                    <span class="stat-trend">
+    <i class="fa-solid fa-bookmark"></i>
+    Saved materials
+                    </span>
+                    </div>
+                    <div class="stat-icon management">
+                        <i class="fa-solid fa-chart-line"></i>
+                    </div>
+                </div>
+ 
+            </div>
+ 
+            <!-- MAIN GRID -->
+            <div class="dash-grid">
+ 
+                <div class="panel" id="my-materials">
+ 
+                    <div class="panel-title">
+                        <h2>My Materials</h2>
+                        <a href="upload.html">+ Upload New</a>
+                    </div>
+ 
+                    <table class="data-table" id="myMaterialsTable">
+                        <thead>
+                            <tr>
+                                <th>Material</th>
+                                <th>Downloads</th>
+                                <th>Rating</th>
+                                <th>Status</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody id="myMaterialsBody">
+
+                            <tr>
+                                <td colspan="5" style="text-align:center;color:var(--muted);padding:24px;">
+                                    Loading your materials...
+                                </td>
+                            </tr>
+
+                        </tbody>
+                    </table>
+ 
+                </div>
+ 
+                <div>
+ 
+                    <div class="panel" style="margin-bottom:22px;">
+ 
+                        <div class="panel-title">
+                            <h2>Recent Activity</h2>
+                        </div>
+ 
+                        <div class="activity-list">
+ 
+                            <div class="activity-item">
+                                <div class="activity-dot"><i class="fa-solid fa-download"></i></div>
+                                <div>
+                                    <p><strong>Rahul</strong> downloaded Python Programming</p>
+                                    <span>2 hours ago</span>
+                                </div>
+                            </div>
+ 
+                            <div class="activity-item">
+                                <div class="activity-dot"><i class="fa-solid fa-star"></i></div>
+                                <div>
+                                    <p><strong>Sneha</strong> rated DBMS Complete Notes 5.0</p>
+                                    <span>Yesterday</span>
+                                </div>
+                            </div>
+ 
+                            <div class="activity-item">
+                                <div class="activity-dot"><i class="fa-solid fa-cloud-arrow-up"></i></div>
+                                <div>
+                                    <p>You uploaded Software Engineering Unit 4</p>
+                                    <span>2 days ago</span>
+                                </div>
+                            </div>
+ 
+                           <div class="activity-list" id="activityList">
+                         <p>Loading activity...</p>
+                </div>
+                    </div>
+ 
+                    <div class="panel storage-panel">
+ 
+                        <div class="panel-title">
+                            <h2>Storage Used</h2>
+                        </div>
+ 
+                        <p style="font-size:13px;color:var(--muted);">You've used 62% of your free upload quota.</p>
+ 
+                        <div class="progress-track">
+                            <div class="progress-fill" style="width:62%;"></div>
+                        </div>
+ 
+                        <ul>
+                            <li><span>PDFs</span><span>8.4 MB</span></li>
+                            <li><span>Documents</span><span>3.2 MB</span></li>
+                            <li><span>Total</span><span>11.6 / 20 MB</span></li>
+                        </ul>
+ 
+                    </div>
+ 
+                </div>
+ 
+            </div>
+ 
+        </div>
+ 
+    </main>
+ 
+</div>
+ 
+ 
+<!-- ================= TOAST ================= -->
+ 
+<div class="toast" id="toast">
+    <i class="fa-solid fa-circle-check"></i>
+    <span id="toastMessage">Success!</span>
+</div>
+ 
+<script src="script.js"></script>
+ 
+</body>
+</html>
+ 

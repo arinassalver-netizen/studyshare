@@ -1,0 +1,590 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>StudyShare - Study Material Sharing Portal</title>
+
+    <link rel="stylesheet" href="style.css">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+</head>
+
+<body>
+
+
+
+<header class="header">
+    <nav class="navbar container">
+
+        <div class="logo">
+            <i class="fa-solid fa-graduation-cap"></i>
+            <span>Study<span class="logo-highlight">Share</span></span>
+        </div>
+
+        <ul class="nav-links" id="navLinks">
+            <li><a href="#home" class="active">Home</a></li>
+            <li><a href="#materials">Materials</a></li>
+            <li><a href="#subjects">Subjects</a></li>
+            <li><a href="#about">About</a></li>
+            <li><a href="#contact">Contact</a></li>
+            <li id="adminNavLink" style="display:none;"><a href="admin.html">Admin Panel</a></li>
+        </ul>
+
+        <div class="nav-actions">
+            <button class="theme-btn" id="themeBtn">
+                <i class="fa-solid fa-moon"></i>
+            </button>
+
+            <a href="login.html" class="login-btn">
+                Login
+            </a>
+
+            <button class="menu-btn" id="menuBtn">
+                <i class="fa-solid fa-bars"></i>
+            </button>
+        </div>
+
+    </nav>
+</header>
+
+
+
+
+<section class="hero" id="home">
+
+    <div class="hero-content container">
+
+        <div class="hero-text">
+
+            <span class="small-title">
+                <i class="fa-solid fa-book-open"></i>
+                Learn. Share. Grow.
+            </span>
+
+            <h1>
+                Your One Stop
+                <span>Study Material</span>
+                Sharing Portal
+            </h1>
+
+            <p>
+                Access high-quality notes, previous question papers,
+                study guides and useful resources shared by students
+                and teachers.
+            </p>
+
+            <div class="hero-buttons">
+                <a href="#materials" class="primary-btn">
+                    Explore Materials
+                    <i class="fa-solid fa-arrow-right"></i>
+                </a>
+
+                <a href="upload.html" class="secondary-btn">
+                    <i class="fa-solid fa-cloud-arrow-up"></i>
+                    Share Material
+                </a>
+            </div>
+
+            <div class="hero-stats">
+
+                <div class="stat">
+                    <h3>5K+</h3>
+                    <p>Materials</p>
+                </div>
+
+                <div class="stat">
+                    <h3>2K+</h3>
+                    <p>Students</p>
+                </div>
+
+                <div class="stat">
+                    <h3>50+</h3>
+                    <p>Subjects</p>
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class="hero-image">
+
+            <div class="floating-card card-one">
+                <i class="fa-solid fa-file-pdf"></i>
+                <div>
+                    <strong>DSA Notes</strong>
+                    <small>PDF • 2.4 MB</small>
+                </div>
+            </div>
+
+            <div class="floating-card card-two">
+                <i class="fa-solid fa-star"></i>
+                <div>
+                    <strong>Top Rated</strong>
+                    <small>4.9 / 5 Rating</small>
+                </div>
+            </div>
+
+            <div class="hero-circle">
+                <i class="fa-solid fa-graduation-cap"></i>
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+
+<section class="search-section">
+
+    <div class="container">
+
+        <div class="search-wrapper" id="searchWrapper">
+
+            <div class="search-box">
+
+                <i class="fa-solid fa-magnifying-glass"></i>
+
+                <input
+                    type="text"
+                    id="searchInput"
+                    placeholder="Search notes, subjects, question papers..."
+                    autocomplete="off"
+                    onkeyup="handleSearchInput(event)"
+                    onfocus="updateSearchSuggestions()">
+
+                <button onclick="searchMaterials(); closeSearchSuggestions();">
+                    Search
+                </button>
+
+            </div>
+
+            <div class="search-suggestions" id="searchSuggestions"></div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+
+<section class="materials section" id="materials">
+
+    <div class="container">
+
+        <div class="section-heading">
+            <span>Explore Resources</span>
+            <h2>Popular Study Materials</h2>
+            <p>
+                Find useful study resources uploaded by students
+                and faculty members.
+            </p>
+        </div>
+
+
+        <div class="filter-buttons">
+
+            <button class="filter-btn active"
+                    onclick="filterMaterials('all', this)">
+                All
+            </button>
+
+            <button class="filter-btn"
+                    onclick="filterMaterials('programming', this)">
+                Programming
+            </button>
+
+            <button class="filter-btn"
+                    onclick="filterMaterials('database', this)">
+                Database
+            </button>
+
+            <button class="filter-btn"
+                    onclick="filterMaterials('networking', this)">
+                Networking
+            </button>
+
+            <button class="filter-btn"
+                    onclick="filterMaterials('management', this)">
+                Management
+            </button>
+
+            <button class="filter-btn"
+                    onclick="filterMaterials('web development', this)">
+                Web Dev
+            </button>
+
+            <button class="filter-btn"
+                    onclick="filterMaterials('operating systems', this)">
+                Operating Systems
+            </button>
+
+        </div>
+
+
+
+        <div class="materials-grid" id="materialsGrid">
+
+            <div class="materials-loading" id="materialsLoading">
+                <i class="fa-solid fa-spinner fa-spin"></i>
+                Loading study materials...
+            </div>
+
+        </div>
+
+        <p id="noResults" class="no-results">
+            No materials found.
+        </p>
+
+    </div>
+
+</section>
+
+
+<!-- ================= SUBJECTS ================= -->
+
+<section class="subjects section" id="subjects">
+
+    <div class="container">
+
+        <div class="section-heading">
+            <span>Browse By Category</span>
+            <h2>Popular Subjects</h2>
+        </div>
+
+        <div class="subjects-grid">
+
+            <div class="subject-card">
+                <i class="fa-solid fa-code"></i>
+                <h3>Programming</h3>
+                <p>120+ Materials</p>
+            </div>
+
+            <div class="subject-card">
+                <i class="fa-solid fa-database"></i>
+                <h3>Database</h3>
+                <p>85+ Materials</p>
+            </div>
+
+            <div class="subject-card">
+                <i class="fa-solid fa-network-wired"></i>
+                <h3>Networking</h3>
+                <p>65+ Materials</p>
+            </div>
+
+            <div class="subject-card">
+                <i class="fa-solid fa-laptop-code"></i>
+                <h3>Web Development</h3>
+                <p>95+ Materials</p>
+            </div>
+
+            <div class="subject-card">
+                <i class="fa-solid fa-gears"></i>
+                <h3>Operating Systems</h3>
+                <p>70+ Materials</p>
+            </div>
+
+            <div class="subject-card">
+                <i class="fa-solid fa-chart-pie"></i>
+                <h3>Management</h3>
+                <p>55+ Materials</p>
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- ================= ABOUT ================= -->
+
+<section class="about section" id="about">
+
+    <div class="container about-container">
+
+        <div class="about-image">
+
+            <div class="about-box">
+                <i class="fa-solid fa-users"></i>
+                <h3>Learn Together</h3>
+                <p>Share knowledge with your community.</p>
+            </div>
+
+        </div>
+
+        <div class="about-content">
+
+            <span>About StudyShare</span>
+
+            <h2>
+                Making Education
+                <strong>Accessible For Everyone</strong>
+            </h2>
+
+            <p>
+                StudyShare is a student-focused platform where
+                learners can upload, discover and share educational
+                resources.
+            </p>
+
+            <p>
+                Our goal is to create a collaborative learning
+                environment where students can help each other
+                succeed academically.
+            </p>
+
+            <div class="about-features">
+
+                <div>
+                    <i class="fa-solid fa-circle-check"></i>
+                    <span>Free Study Materials</span>
+                </div>
+
+                <div>
+                    <i class="fa-solid fa-circle-check"></i>
+                    <span>Easy Download</span>
+                </div>
+
+                <div>
+                    <i class="fa-solid fa-circle-check"></i>
+                    <span>Student Community</span>
+                </div>
+
+                <div>
+                    <i class="fa-solid fa-circle-check"></i>
+                    <span>Quality Resources</span>
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- ================= HOW IT WORKS ================= -->
+
+<section class="how-section section">
+
+    <div class="container">
+
+        <div class="section-heading">
+            <span>Simple Process</span>
+            <h2>How StudyShare Works</h2>
+        </div>
+
+        <div class="steps">
+
+            <div class="step">
+                <div class="step-number">01</div>
+                <i class="fa-solid fa-user-plus"></i>
+                <h3>Create Account</h3>
+                <p>
+                    Register as a student and join our
+                    learning community.
+                </p>
+            </div>
+
+            <div class="step">
+                <div class="step-number">02</div>
+                <i class="fa-solid fa-magnifying-glass"></i>
+                <h3>Find Materials</h3>
+                <p>
+                    Search for notes, PDFs and previous
+                    question papers.
+                </p>
+            </div>
+
+            <div class="step">
+                <div class="step-number">03</div>
+                <i class="fa-solid fa-download"></i>
+                <h3>Download</h3>
+                <p>
+                    Download useful materials and
+                    study anywhere.
+                </p>
+            </div>
+
+            <div class="step">
+                <div class="step-number">04</div>
+                <i class="fa-solid fa-cloud-arrow-up"></i>
+                <h3>Share</h3>
+                <p>
+                    Upload your own materials and
+                    help other students.
+                </p>
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- ================= CONTACT ================= -->
+
+<section class="contact section" id="contact">
+
+    <div class="container">
+
+        <div class="section-heading">
+            <span>Get In Touch</span>
+            <h2>Contact Us</h2>
+            <p>
+                Have questions or suggestions?
+                Send us a message.
+            </p>
+        </div>
+
+        <div class="contact-container">
+
+            <div class="contact-info">
+
+                <div class="contact-item">
+                    <i class="fa-solid fa-envelope"></i>
+                    <div>
+                        <h3>Email</h3>
+                        <p>support@studyshare.com</p>
+                    </div>
+                </div>
+
+                <div class="contact-item">
+                    <i class="fa-solid fa-phone"></i>
+                    <div>
+                        <h3>Phone</h3>
+                        <p>+91 98765 43210</p>
+                    </div>
+                </div>
+
+                <div class="contact-item">
+                    <i class="fa-solid fa-location-dot"></i>
+                    <div>
+                        <h3>Location</h3>
+                        <p>Hyderabad, India</p>
+                    </div>
+                </div>
+
+            </div>
+
+            <form class="contact-form" id="contactForm">
+
+                <input type="text"
+                       id="contactName"
+                       placeholder="Your Name"
+                       required>
+
+                <input type="email"
+                       id="contactEmail"
+                       placeholder="Your Email"
+                       required>
+
+                <input type="text"
+                       placeholder="Subject"
+                       required>
+
+                <textarea
+                    id="contactMessage"
+                    rows="6"
+                    placeholder="Your Message"
+                    required></textarea>
+
+                <button type="submit" class="primary-btn">
+                    Send Message
+                    <i class="fa-solid fa-paper-plane"></i>
+                </button>
+
+            </form>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- ================= FOOTER ================= -->
+
+<footer class="footer">
+
+    <div class="container footer-container">
+
+        <div class="footer-brand">
+
+            <div class="logo">
+                <i class="fa-solid fa-graduation-cap"></i>
+                <span>Study<span class="logo-highlight">Share</span></span>
+            </div>
+
+            <p>
+                A collaborative platform for students
+                to learn, share and grow together.
+            </p>
+
+            <div class="social-icons">
+                <a href="#"><i class="fa-brands fa-facebook-f"></i></a>
+                <a href="#"><i class="fa-brands fa-instagram"></i></a>
+                <a href="#"><i class="fa-brands fa-linkedin-in"></i></a>
+                <a href="#"><i class="fa-brands fa-github"></i></a>
+            </div>
+
+        </div>
+
+        <div class="footer-links">
+            <h3>Quick Links</h3>
+            <a href="#home">Home</a>
+            <a href="#materials">Materials</a>
+            <a href="#subjects">Subjects</a>
+            <a href="#about">About</a>
+        </div>
+
+        <div class="footer-links">
+            <h3>Resources</h3>
+            <a href="#">Notes</a>
+            <a href="#">Question Papers</a>
+            <a href="#">Assignments</a>
+            <a href="#">Projects</a>
+        </div>
+
+        <div class="footer-links">
+            <h3>Support</h3>
+            <a href="#contact">Contact Us</a>
+            <a href="#">Privacy Policy</a>
+            <a href="#">Terms</a>
+            <a href="#">Help Center</a>
+        </div>
+
+    </div>
+
+    <div class="copyright">
+        <p>
+            © 2026 StudyShare. All Rights Reserved.
+        </p>
+    </div>
+
+</footer>
+
+
+<!-- ================= TOAST ================= -->
+
+<div class="toast" id="toast">
+    <i class="fa-solid fa-circle-check"></i>
+    <span id="toastMessage">Success!</span>
+</div>
+
+
+<script src="script.js"></script>
+
+</body>
+</html>

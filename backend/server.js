@@ -12,7 +12,14 @@ const authRoutes = require("./routes/authRoutes");
 const adminRoutes = require("./routes/adminRoutes");
 const app = express();
 
-app.use(cors());
+app.use(cors({
+    origin: [
+        "https://studyshare-gkjbk8v04-srirams-projects-932bfdb2.vercel.app",
+        "https://studyshare-liart.vercel.app"
+    ],
+    methods: ["GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"],
+    allowedHeaders: ["Content-Type", "Authorization"]
+}));
 app.use(express.json());
 app.use("/uploads", express.static("uploads"));
 connectDB();

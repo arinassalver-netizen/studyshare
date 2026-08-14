@@ -7,7 +7,8 @@ const {
     searchMaterials,
     createMaterial,
     deleteMaterial,
-    downloadMaterial
+    downloadMaterial,
+    rateMaterial
 } = require("../controllers/materialController");
 
 const upload = require("../middleware/uploadMiddleware");
@@ -24,6 +25,8 @@ router.get("/", getMaterials);
 router.get("/search", searchMaterials);
 
 router.get("/mine", protect, getMyMaterials);
+
+router.post("/:id/rate", protect, rateMaterial);
 
 router.get("/:id", getMaterialById);
 

@@ -2,7 +2,10 @@ const fs = require("fs");
 const path = require("path");
 
 const Material = require("../models/material");
+const Rating = require("../models/Rating");
 const Download = require("../models/download");
+
+
 // GET all materials (public - only approved materials are visible)
 const getMaterials = async (req, res) => {
     try {
@@ -210,6 +213,113 @@ const downloadMaterial = async (req, res) => {
         });
     }
 };
+const rateMaterial = async (req, res) => {
+
+    try {
+
+        const { rating } = req.body;
+
+        const materialId = req.params.id;
+
+        if (!rating || rating < 1 || rating > 5) {
+
+            return res.status(400).json({
+                message: "Rating must be between 1 and 5."
+            });
+        }
+
+        const material =
+            await Material.findById(materialId);
+
+        if (!material) {
+
+            return res.status(404).json({
+                message: "Material not found."
+            });
+        }
+
+        /*
+           Check whether this user has
+           already rated this material.
+        */
+
+       const existingRating =
+    await Rating.findOne({
+        material: materialId,
+        user: req.user.id
+    });
+
+        if (existingRating) {
+
+            /*
+               Update existing rating
+            */
+
+            existingRating.rating = rating;
+
+            await existingRating.save();
+
+        } else {
+
+            /*
+               Create new rating
+            */
+
+          await Rating.create({
+    material: materialId,
+    user: req.user.id,
+    rating: rating
+});
+        }
+
+        /*
+           Recalculate average
+           
+        */
+
+        const ratings =
+            await Rating.find({
+                material: materialId
+            });
+
+        const total =
+            ratings.reduce(
+                (sum, item) => sum + item.rating,
+                0
+            );
+
+        const average =
+            ratings.length
+                ? total / ratings.length
+                : 0;
+
+        material.rating =
+            Number(average.toFixed(1));
+
+        material.ratingCount =
+            ratings.length;
+
+        await material.save();
+
+        res.json({
+            message: "Rating submitted successfully.",
+            rating: material.rating,
+            ratingCount: material.ratingCount
+        });
+
+    } catch (error) {
+
+        console.error(
+            "Rating error:",
+            error
+        );
+
+        res.status(500).json({
+            message: "Failed to submit rating."
+        });
+    }
+};
+
 module.exports = {
     getMaterials,
     getMyMaterials,
@@ -217,5 +327,6 @@ module.exports = {
     searchMaterials,
     createMaterial,
     deleteMaterial,
-    downloadMaterial
+    downloadMaterial,
+    rateMaterial
 };

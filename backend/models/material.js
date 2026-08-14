@@ -41,6 +41,18 @@ const materialSchema = new mongoose.Schema(
             default: 0
         },
 
+        rating: {
+            type: Number,
+            default: 0,
+            min: 0,
+            max: 5
+        },
+
+        ratingCount: {
+            type: Number,
+            default: 0
+        },
+
         status: {
             type: String,
             enum: ["pending", "approved", "rejected"],

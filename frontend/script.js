@@ -1650,7 +1650,25 @@ function renderMaterialCard(material) {
                         <span class="download-count">${material.downloads || 0}</span>
                     </span>
                 </div>
+                    <div class="material-rating">
+                    <span class="stars">
+                        ${renderStars(material.rating || 0)}
+                    </span>
 
+                    <span class="rating-number">
+                        ${(material.rating || 0).toFixed(1)}
+                    </span>
+
+                    <span class="rating-count">
+                        (${material.ratingCount || 0})
+                    </span>
+                </div>
+
+                <button class="rate-btn"
+                        onclick="openRating('${material._id}')">
+                    <i class="fa-solid fa-star"></i>
+                    Rate Material
+                </button>
                 <button class="download-btn"
                         onclick="downloadMaterial('${material._id}', '${title.replace(/'/g, "\\'")}')">
                     <i class="fa-solid fa-download"></i>
@@ -1662,8 +1680,122 @@ function renderMaterialCard(material) {
         </article>
     `;
 }
+function renderStars(rating) {
+    let html = "";
 
+    for (let i = 1; i <= 5; i++) {
+        if (i <= rating) {
+            html += '<i class="fa-solid fa-star active"></i>';
+        } else {
+            html += '<i class="fa-regular fa-star"></i>';
+        }
+    }
 
+    return html;
+}
+function openRating(materialId) {
+
+    const rating = prompt("Enter your rating from 1 to 5:");
+
+    if (rating === null) {
+        return;
+    }
+
+    const value = Number(rating);
+
+    if (!Number.isInteger(value) || value < 1 || value > 5) {
+        showToast("Please enter a rating between 1 and 5.");
+        return;
+    }
+
+    submitRating(materialId, value);
+}
+async function submitRating(materialId, rating) {
+
+    try {
+
+        const token = getToken();
+
+        if (!token) {
+            showToast("Please log in to rate materials.");
+
+            setTimeout(() => {
+                window.location.href = "login.html";
+            }, 800);
+
+            return;
+        }
+
+        showToast("Submitting rating...");
+
+        const response = await fetch(
+            `${API_BASE}/api/materials/${materialId}/rate`,
+            {
+                method: "POST",
+
+                headers: {
+                    "Content-Type": "application/json",
+                    "Authorization": "Bearer " + token
+                },
+
+                body: JSON.stringify({
+                    rating: rating
+                })
+            }
+        );
+
+        const data = await response.json();
+
+        if (!response.ok) {
+            showToast(data.message || "Failed to submit rating.");
+            return;
+        }
+
+        showToast("Rating submitted successfully!");
+
+        updateMaterialRating(
+            materialId,
+            data.rating,
+            data.ratingCount
+        );
+
+    } catch (error) {
+
+        console.error("Rating error:", error);
+
+        showToast("Unable to connect to server.");
+    }
+}
+function updateMaterialRating(
+    materialId,
+    rating,
+    ratingCount
+) {
+
+    const card = document.querySelector(
+        `[data-material-id="${materialId}"]`
+    );
+
+    if (!card) {
+        return;
+    }
+
+    const stars = card.querySelector(".stars");
+    const ratingNumber = card.querySelector(".rating-number");
+    const ratingCountElement = card.querySelector(".rating-count");
+
+    if (stars) {
+        stars.innerHTML = renderStars(rating);
+    }
+
+    if (ratingNumber) {
+        ratingNumber.textContent = Number(rating).toFixed(1);
+    }
+
+    if (ratingCountElement) {
+        ratingCountElement.textContent = `(${ratingCount})`;
+    }
+}
 async function loadPublicMaterials() {
 
     const grid = document.getElementById("materialsGrid");

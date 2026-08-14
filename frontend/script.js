@@ -1796,6 +1796,220 @@ function updateMaterialRating(
         ratingCountElement.textContent = `(${ratingCount})`;
     }
 }
+function updateHeroFeaturedMaterials(materials) {
+
+    const recentButton =
+        document.getElementById("recentMaterialButton");
+
+    const recentTitle =
+        document.getElementById("recentMaterialTitle");
+
+    const recentInfo =
+        document.getElementById("recentMaterialInfo");
+
+    const recentIcon =
+        document.getElementById("recentMaterialIcon");
+
+
+    const topRatedButton =
+        document.getElementById("topRatedButton");
+
+    const topRatedTitle =
+        document.getElementById("topRatedTitle");
+
+    const topRatedInfo =
+        document.getElementById("topRatedInfo");
+
+
+    if (!materials || !materials.length) {
+
+        if (recentTitle) {
+            recentTitle.textContent = "No Materials";
+        }
+
+        if (recentInfo) {
+            recentInfo.textContent = "Upload the first material";
+        }
+
+        if (topRatedTitle) {
+            topRatedTitle.textContent = "Top Rated";
+        }
+
+        if (topRatedInfo) {
+            topRatedInfo.textContent = "No ratings yet";
+        }
+
+        return;
+    }
+
+
+    /* =====================================================
+       RECENTLY UPLOADED MATERIAL
+    ===================================================== */
+
+    const recentMaterial =
+        [...materials].sort(
+            (a, b) =>
+                new Date(b.createdAt) -
+                new Date(a.createdAt)
+        )[0];
+
+
+    if (recentMaterial) {
+
+        if (recentTitle) {
+            recentTitle.textContent =
+                recentMaterial.title;
+        }
+
+        if (recentInfo) {
+            recentInfo.textContent =
+                `${recentMaterial.subject} • Recently uploaded`;
+        }
+
+        if (recentIcon) {
+
+            const iconInfo =
+                subjectIconInfo(
+                    recentMaterial.subject
+                );
+
+            recentIcon.className =
+                iconInfo.icon;
+        }
+
+
+        if (recentButton) {
+
+            recentButton.onclick = () => {
+
+                scrollToMaterial(
+                    recentMaterial._id
+                );
+
+            };
+        }
+    }
+
+
+    /* =====================================================
+       HIGHEST RATED MATERIAL
+    ===================================================== */
+
+    const ratedMaterials =
+        materials.filter(
+            material =>
+                Number(material.ratingCount || 0) > 0
+        );
+
+
+    if (!ratedMaterials.length) {
+
+        if (topRatedTitle) {
+            topRatedTitle.textContent =
+                "Top Rated";
+        }
+
+        if (topRatedInfo) {
+            topRatedInfo.textContent =
+                "No ratings yet";
+        }
+
+        if (topRatedButton) {
+            topRatedButton.onclick = null;
+        }
+
+        return;
+    }
+
+
+    const topRatedMaterial =
+        [...ratedMaterials].sort(
+            (a, b) => {
+
+                const ratingDifference =
+                    Number(b.rating || 0) -
+                    Number(a.rating || 0);
+
+                if (ratingDifference !== 0) {
+                    return ratingDifference;
+                }
+
+                return (
+                    Number(b.ratingCount || 0) -
+                    Number(a.ratingCount || 0)
+                );
+            }
+        )[0];
+
+
+    if (topRatedMaterial) {
+
+        if (topRatedTitle) {
+            topRatedTitle.textContent =
+                topRatedMaterial.title;
+        }
+
+        if (topRatedInfo) {
+            topRatedInfo.textContent =
+                `${Number(topRatedMaterial.rating || 0).toFixed(1)} ★ • ${topRatedMaterial.ratingCount || 0} ratings`;
+        }
+
+
+        if (topRatedButton) {
+
+            topRatedButton.onclick = () => {
+
+                scrollToMaterial(
+                    topRatedMaterial._id
+                );
+
+            };
+        }
+    }
+}
+function scrollToMaterial(materialId) {
+
+    const card =
+        document.querySelector(
+            `[data-material-id="${materialId}"]`
+        );
+
+    if (!card) {
+
+        const materialsSection =
+            document.getElementById("materials");
+
+        if (materialsSection) {
+            materialsSection.scrollIntoView({
+                behavior: "smooth"
+            });
+        }
+
+        return;
+    }
+
+
+    card.scrollIntoView({
+        behavior: "smooth",
+        block: "center"
+    });
+
+
+    card.style.transition =
+        "0.3s ease";
+
+    card.style.transform =
+        "scale(1.03)";
+
+
+    setTimeout(() => {
+
+        card.style.transform =
+            "scale(1)";
+
+    }, 500);
+}
 async function loadPublicMaterials() {
 
     const grid = document.getElementById("materialsGrid");
@@ -1826,14 +2040,15 @@ async function loadPublicMaterials() {
             return;
         }
 
-        grid.innerHTML = materials
-            .map(renderMaterialCard)
-            .join("");
+      grid.innerHTML = materials
+    .map(renderMaterialCard)
+    .join("");
 
-        // Fade in the newly-rendered cards without disturbing
-        // elements that have already animated in.
-        animateNewlyAddedCards(".material-card");
 
+updateHeroFeaturedMaterials(materials);
+
+
+animateNewlyAddedCards(".material-card");
     } catch (error) {
 
         console.error("Failed to load materials:", error);
